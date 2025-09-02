@@ -115,3 +115,20 @@ button:focus-visible {
   height: 25px;
   border-radius: 8px;
 }
+
+.riddle_info_bar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0 2rem;
+}
+
+.riddle{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
