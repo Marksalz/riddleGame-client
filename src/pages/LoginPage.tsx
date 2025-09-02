@@ -84,7 +84,9 @@ export default function LoginPage() {
             onClick={(formData) => {
               const usersString = localStorage.getItem("users");
               const users = usersString ? JSON.parse(usersString) : [];
-              users.append({ username: formData.name });
+              users.push(formData);
+              localStorage.setItem("users", JSON.stringify(users));
+              alert("Registration successful!");
             }}
           />
         )}
