@@ -108,8 +108,8 @@ function mockUsers() {
   // Save to localStorage
   localStorage.setItem("users", JSON.stringify(users));
 
-  // Retrieve later
-  const usersString = localStorage.getItem("users");
-  const storedUsers = usersString ? JSON.parse(usersString) : [];
-  console.log(storedUsers);
+//   // Retrieve later
+//   const usersString = localStorage.getItem("users");
+//   const storedUsers = usersString ? JSON.parse(usersString) : [];
+//   console.log(storedUsers);
 }
