@@ -9,7 +9,6 @@ export default function Timer(props: {
   isOvertime: boolean;
   setIsOvertime: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-
   useEffect(() => {
     props.setTimeLeft(props.timeLimit);
     const timer = setInterval(() => {
