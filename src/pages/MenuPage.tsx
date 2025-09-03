@@ -1,7 +1,9 @@
+import Header from "../components/Header";
+
 export default function MenuPage() {
   return (
     <div>
-      <h1>Menu Page!!</h1>
+      <Header headerText="Game" btnText="Light/Dark mode" />
     </div>
   );
 }
