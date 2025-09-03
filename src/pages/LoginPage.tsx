@@ -38,19 +38,38 @@ export default function LoginPage() {
               },
             ]}
             showLogin={showLoginForm}
-            onClick={(formData) => {
-              const usersString = localStorage.getItem("users");
-              const users = usersString ? JSON.parse(usersString) : [];
-              const userExists = users.some(
-                (u: { username: string; password: string }) =>
-                  u.username === formData.username &&
-                  u.password === formData.password
+            onClick={async (formData) => {
+              const res = await fetch(
+                `http://localhost:3000/api/players/login`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  credentials: "include",
+                  body: JSON.stringify(formData),
+                }
               );
-              if (userExists) {
+
+              if (res.ok) {
+                alert("Login successful!");
                 navigate("/menu");
               } else {
-                alert("Invalid username or password");
+                const data = await res.json();
+                alert(data.error || "Registration failed");
               }
+              //   const usersString = localStorage.getItem("users");
+              //   const users = usersString ? JSON.parse(usersString) : [];
+              //   const userExists = users.some(
+              //     (u: { username: string; password: string }) =>
+              //       u.username === formData.username &&
+              //       u.password === formData.password
+              //   );
+              //   if (userExists) {
+              //     navigate("/menu");
+              //   } else {
+              //     alert("Invalid username or password");
+              //   }
             }}
           />
         ) : (
