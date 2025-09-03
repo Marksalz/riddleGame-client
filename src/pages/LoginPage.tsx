@@ -28,30 +28,34 @@ export default function LoginPage() {
                 id: "username",
                 name: "username",
                 type: "text",
-                value: "",
                 placeholder: "Username",
               },
               {
                 id: "password",
                 name: "password",
                 type: "password",
-                value: "",
                 placeholder: "Password",
               },
             ]}
             showLogin={showLoginForm}
-            onClick={(formData) => {
-              const usersString = localStorage.getItem("users");
-              const users = usersString ? JSON.parse(usersString) : [];
-              const userExists = users.some(
-                (u: { username: string; password: string }) =>
-                  u.username === formData.username &&
-                  u.password === formData.password
+            onClick={async (formData) => {
+              const res = await fetch(
+                `http://localhost:3000/api/players/login`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  credentials: "include",
+                  body: JSON.stringify(formData),
+                }
               );
-              if (userExists) {
+              const data = await res.json();
+              if (res.ok) {
+                alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
                 navigate("/menu");
               } else {
-                alert("Invalid username or password");
+                alert(data.error || "Login failed failed");
               }
             }}
           />
@@ -62,31 +66,41 @@ export default function LoginPage() {
                 id: "username",
                 name: "username",
                 type: "text",
-                value: "",
                 placeholder: "Username",
               },
               {
                 id: "Email",
                 name: "Email",
                 type: "email",
-                value: "",
                 placeholder: "Email",
               },
               {
                 id: "password",
                 name: "password",
                 type: "password",
-                value: "",
                 placeholder: "Password",
               },
             ]}
             showLogin={showLoginForm}
-            onClick={(formData) => {
-              const usersString = localStorage.getItem("users");
-              const users = usersString ? JSON.parse(usersString) : [];
-              users.push(formData);
-              localStorage.setItem("users", JSON.stringify(users));
-              alert("Registration successful!");
+            onClick={async (formData) => {
+              const res = await fetch(
+                `http://localhost:3000/api/players/signup`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  credentials: "include",
+                  body: JSON.stringify(formData),
+                }
+              );
+              if (res.ok) {
+                alert("Registration successful!");
+                navigate("/menu");
+              } else {
+                const data = await res.json();
+                alert(data.error || "Registration failed");
+              }
             }}
           />
         )}
@@ -108,8 +122,8 @@ function mockUsers() {
   // Save to localStorage
   localStorage.setItem("users", JSON.stringify(users));
 
-//   // Retrieve later
-//   const usersString = localStorage.getItem("users");
-//   const storedUsers = usersString ? JSON.parse(usersString) : [];
-//   console.log(storedUsers);
+  //   // Retrieve later
+  //   const usersString = localStorage.getItem("users");
+  //   const storedUsers = usersString ? JSON.parse(usersString) : [];
+  //   console.log(storedUsers);
 }
