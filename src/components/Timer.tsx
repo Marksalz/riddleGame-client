@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Timer(props: {
   timeLimit: number;
@@ -9,19 +9,18 @@ export default function Timer(props: {
   isOvertime: boolean;
   setIsOvertime: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [timeLeft, setTimeLeft] = useState(props.timeLimit);
-  const [isOvertime, setIsOvertime] = useState(false);
 
   useEffect(() => {
+    props.setTimeLeft(props.timeLimit);
     const timer = setInterval(() => {
       props.setFinalTime((prevFinalTime) => prevFinalTime + 1);
 
-      setTimeLeft((t) => {
-        if (!isOvertime) {
+      props.setTimeLeft((t) => {
+        if (!props.isOvertime) {
           if (t > 0) {
             return t - 1;
           } else {
-            setIsOvertime(true);
+            props.setIsOvertime(true);
             return 1;
           }
         } else {
@@ -31,14 +30,14 @@ export default function Timer(props: {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isOvertime, props.setFinalTime]);
+  }, [props.isOvertime, props.setFinalTime, props.timeLimit]);
 
   return (
     <div>
-      {!isOvertime ? (
-        <span>Time left: {timeLeft}</span>
+      {!props.isOvertime ? (
+        <span>Time left: {props.timeLeft}</span>
       ) : (
-        <span>Overtime: +{timeLeft}</span>
+        <span>Overtime: +{props.timeLeft}</span>
       )}
     </div>
   );

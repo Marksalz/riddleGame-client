@@ -9,6 +9,7 @@ export default function GamePage() {
   const [currentRiddleIdx, setCurrentRiddleIdx] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
   const riddles = riddlesFromStorage;
+  //const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
     if (isSolved && currentRiddleIdx < riddles.length - 1) {
@@ -28,6 +29,8 @@ export default function GamePage() {
           riddle={riddles[currentRiddleIdx]}
           isSolved={isSolved}
           setIsSolved={setIsSolved}
+          //timeLeft={timeLeft}
+          
         />
       ) : (
         <div>All riddles solved!</div>

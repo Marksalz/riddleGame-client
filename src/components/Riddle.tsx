@@ -11,12 +11,16 @@ type RiddleProps = {
   };
   isSolved: boolean;
   setIsSolved: React.Dispatch<React.SetStateAction<boolean>>;
+  //timeLeft: number;
+  //setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function Riddle(props: RiddleProps) {
   const [timeToSolve, setTimeToSolve] = useState(0);
   const [riddleAnswer, setRiddleAnswer] = useState("");
-  const [timeLeft, setTimeLeft] = useState(props.riddle.timeLimit);
+  const [timeLeft, setTimeLeft] = useState(0);
+  
+  
   const [isOvertime, setIsOvertime] = useState(false);
   return (
     <div>
@@ -66,6 +70,8 @@ export default function Riddle(props: RiddleProps) {
               }
               setRiddleAnswer("");
               setTimeToSolve(0);
+              setTimeLeft(props.riddle.timeLimit);
+              setIsOvertime(false);
             }}
           >
             Submit answer
