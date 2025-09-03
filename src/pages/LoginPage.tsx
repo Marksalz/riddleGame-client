@@ -28,14 +28,12 @@ export default function LoginPage() {
                 id: "username",
                 name: "username",
                 type: "text",
-                value: "",
                 placeholder: "Username",
               },
               {
                 id: "password",
                 name: "password",
                 type: "password",
-                value: "",
                 placeholder: "Password",
               },
             ]}
@@ -62,31 +60,40 @@ export default function LoginPage() {
                 id: "username",
                 name: "username",
                 type: "text",
-                value: "",
                 placeholder: "Username",
               },
               {
                 id: "Email",
                 name: "Email",
                 type: "email",
-                value: "",
                 placeholder: "Email",
               },
               {
                 id: "password",
                 name: "password",
                 type: "password",
-                value: "",
                 placeholder: "Password",
               },
             ]}
             showLogin={showLoginForm}
-            onClick={(formData) => {
-              const usersString = localStorage.getItem("users");
-              const users = usersString ? JSON.parse(usersString) : [];
-              users.push(formData);
-              localStorage.setItem("users", JSON.stringify(users));
-              alert("Registration successful!");
+            onClick={async (formData) => {
+              const res = await fetch(
+                `http://localhost:3000/api/players/signup`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  credentials: "include",
+                  body: JSON.stringify(formData),
+                }
+              );
+              if (res.ok) {
+                alert("Registration successful!");
+              } else {
+                const data = await res.json();
+                alert(data.error || "Registration failed");
+              }
             }}
           />
         )}
@@ -108,8 +115,8 @@ function mockUsers() {
   // Save to localStorage
   localStorage.setItem("users", JSON.stringify(users));
 
-//   // Retrieve later
-//   const usersString = localStorage.getItem("users");
-//   const storedUsers = usersString ? JSON.parse(usersString) : [];
-//   console.log(storedUsers);
+  //   // Retrieve later
+  //   const usersString = localStorage.getItem("users");
+  //   const storedUsers = usersString ? JSON.parse(usersString) : [];
+  //   console.log(storedUsers);
 }
