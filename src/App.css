@@ -124,11 +124,58 @@ button:focus-visible {
   border: 2px solid black;
   border-radius: 8px;
   padding: 0 2rem;
+  margin-top: 2rem;
 }
 
-.riddle{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    gap: 1rem;
+.riddle_info_bar_item {
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0.5rem 2rem;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.home_link {
+  background-color: #5ae0e0;
+  color: black;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  transition: background-color 0.25s, color 0.25s;
+}
+.home_link:hover {
+  background-color: #483d8b;
+  color: #fffbe7;
+}
+
+.riddle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.riddle_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.riddle_container input {
+  height: 25px;
+  border-radius: 8px;
+}
+
+.riddle_container label {
+  height: 25px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #fffbe7;
+  color: black;
+  padding: 1rem;
 }

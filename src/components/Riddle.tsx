@@ -1,26 +1,63 @@
 import { Link } from "react-router";
+import Timer from "./Timer";
+import { useState } from "react";
 
 type RiddleProps = {
   riddle: {
     taskDescription: string;
-    // add other properties if needed
+    difficulty: string;
+    timeLimit: number;
+    correctAnswer: string;
   };
 };
 
 export default function Riddle(props: RiddleProps) {
+  const [timeToSolve, setTimeToSolve] = useState(0);
+  let riddleAnswer = "";
   return (
-    <div className="container">
+    <div>
       <section className="riddle_info_bar">
-        <Link to="/">Home</Link>
-        <p>Level</p>
-        <p>Time limit</p>
-        <p>Timer</p>
+        <Link className="riddle_info_bar_item home_link" to="/">
+          Home
+        </Link>
+        <p className="riddle_info_bar_item">{`Level: ${props.riddle.difficulty}`}</p>
+        <p className="riddle_info_bar_item">{`Time Limit: ${props.riddle.timeLimit} seconds`}</p>
+        <div className="riddle_info_bar_item">
+          <Timer
+            finalTime={timeToSolve}
+            setFinalTime={setTimeToSolve}
+            timeLimit={props.riddle.timeLimit}
+          />
+        </div>
       </section>
-      <form className="riddle" action="">
-        <label htmlFor="">{props.riddle.taskDescription}</label>
-        <input type="text" name="answer" id="" placeholder="write answer here" />
-
-      </form>
+      <div className="riddle_container">
+        <form className="riddle" action="">
+          <label htmlFor="">{props.riddle.taskDescription}</label>
+          <input
+            type="text"
+            name="answer"
+            placeholder="write answer here"
+            onChange={(e) => {
+              riddleAnswer = e.target.value;
+            }}
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              if (
+                riddleAnswer.trim().toLowerCase() ===
+                props.riddle.correctAnswer.trim().toLowerCase()
+              ) {
+                alert(`Correct! Riddle solved in ${timeToSolve} seconds!`);
+              } else {
+                alert(`Incorrect! try again later`);
+              }
+            }}
+          >
+            Submit answer
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
