@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "../components/Header";
 import Riddle from "../components/Riddle";
 
@@ -5,10 +6,16 @@ export default function GamePage() {
   loadRiddlesToLocalStorage();
   const riddlesString = localStorage.getItem("riddles");
   const riddlesFromStorage = riddlesString ? JSON.parse(riddlesString) : [];
+  const [isSolved, setIsSolved] = useState(false);
   return (
     <div>
       <Header headerText="Game" btnText="Light/Dark mode" />
-      <Riddle riddle={riddlesFromStorage[0]}/>
+      {}
+      <Riddle
+        riddle={riddlesFromStorage[0]}
+        isSolved={isSolved}
+        setIsSolved={setIsSolved}
+      />
     </div>
   );
 }

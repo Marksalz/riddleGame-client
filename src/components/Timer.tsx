@@ -10,10 +10,7 @@ export default function Timer(props: {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      props.setFinalTime((finalTime) => {
-        const updatedTime = finalTime + 1;
-        return updatedTime;
-      });
+      props.setFinalTime(props.finalTime + 1);
 
       setTimeLeft((t) => {
         if (!isOvertime) {

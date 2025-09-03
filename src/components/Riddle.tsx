@@ -9,11 +9,13 @@ type RiddleProps = {
     timeLimit: number;
     correctAnswer: string;
   };
+  isSolved: boolean;
+  setIsSolved: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Riddle(props: RiddleProps) {
   const [timeToSolve, setTimeToSolve] = useState(0);
-  let riddleAnswer = "";
+  const [riddleAnswer, setRiddleAnswer] = useState("");
   return (
     <div>
       <section className="riddle_info_bar">
@@ -37,21 +39,26 @@ export default function Riddle(props: RiddleProps) {
             type="text"
             name="answer"
             placeholder="write answer here"
+            value={riddleAnswer}
             onChange={(e) => {
-              riddleAnswer = e.target.value;
+              setRiddleAnswer(e.target.value);
             }}
           />
           <button
             onClick={(e) => {
               e.preventDefault();
+
               if (
                 riddleAnswer.trim().toLowerCase() ===
                 props.riddle.correctAnswer.trim().toLowerCase()
               ) {
+                props.setIsSolved(true);
+
                 alert(`Correct! Riddle solved in ${timeToSolve} seconds!`);
               } else {
                 alert(`Incorrect! try again later`);
               }
+              setRiddleAnswer("");
             }}
           >
             Submit answer
