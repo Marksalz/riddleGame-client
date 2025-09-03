@@ -50,26 +50,13 @@ export default function LoginPage() {
                   body: JSON.stringify(formData),
                 }
               );
-
+              const data = await res.json();
               if (res.ok) {
-                alert("Login successful!");
+                alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
                 navigate("/menu");
               } else {
-                const data = await res.json();
-                alert(data.error || "Registration failed");
+                alert(data.error || "Login failed failed");
               }
-              //   const usersString = localStorage.getItem("users");
-              //   const users = usersString ? JSON.parse(usersString) : [];
-              //   const userExists = users.some(
-              //     (u: { username: string; password: string }) =>
-              //       u.username === formData.username &&
-              //       u.password === formData.password
-              //   );
-              //   if (userExists) {
-              //     navigate("/menu");
-              //   } else {
-              //     alert("Invalid username or password");
-              //   }
             }}
           />
         ) : (
@@ -109,6 +96,7 @@ export default function LoginPage() {
               );
               if (res.ok) {
                 alert("Registration successful!");
+                navigate("/menu");
               } else {
                 const data = await res.json();
                 alert(data.error || "Registration failed");
