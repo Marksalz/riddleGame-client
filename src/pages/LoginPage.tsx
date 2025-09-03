@@ -3,10 +3,13 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import Form from "../components/Form";
 import { useNavigate } from "react-router";
+import { useCurrentPlayer } from "../contexts/CurrentPlayerContext";
+import type { Player } from "../contexts/CurrentPlayerContext";
 
 export default function LoginPage() {
   const [showLoginForm, setShowLoginForm] = useState(true);
   const navigate = useNavigate();
+  const currentPlayerContext = useCurrentPlayer();
   mockUsers();
   return (
     <div>
@@ -53,6 +56,7 @@ export default function LoginPage() {
               const data = await res.json();
               if (res.ok) {
                 alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
+                currentPlayerContext.setCurrentPlayer(data.user);
                 navigate("/menu");
               } else {
                 alert(data.error || "Login failed failed");
@@ -94,11 +98,20 @@ export default function LoginPage() {
                   body: JSON.stringify(formData),
                 }
               );
+              const data = await res.json();
               if (res.ok) {
                 alert("Registration successful!");
+
+                const newPlayer: Player = {
+                  id: data.id,
+                  username: data.username,
+                  role: data.role,
+                  lowestTime: data.lowestTime,
+                };
+                currentPlayerContext.setCurrentPlayer(newPlayer);
+
                 navigate("/menu");
               } else {
-                const data = await res.json();
                 alert(data.error || "Registration failed");
               }
             }}
