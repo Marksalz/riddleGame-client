@@ -16,6 +16,8 @@ type RiddleProps = {
 export default function Riddle(props: RiddleProps) {
   const [timeToSolve, setTimeToSolve] = useState(0);
   const [riddleAnswer, setRiddleAnswer] = useState("");
+  const [timeLeft, setTimeLeft] = useState(props.riddle.timeLimit);
+  const [isOvertime, setIsOvertime] = useState(false);
   return (
     <div>
       <section className="riddle_info_bar">
@@ -29,6 +31,10 @@ export default function Riddle(props: RiddleProps) {
             finalTime={timeToSolve}
             setFinalTime={setTimeToSolve}
             timeLimit={props.riddle.timeLimit}
+            timeLeft={timeLeft}
+            setTimeLeft={setTimeLeft}
+            isOvertime={isOvertime}
+            setIsOvertime={setIsOvertime}
           />
         </div>
       </section>
@@ -59,6 +65,7 @@ export default function Riddle(props: RiddleProps) {
                 alert(`Incorrect! try again later`);
               }
               setRiddleAnswer("");
+              setTimeToSolve(0);
             }}
           >
             Submit answer

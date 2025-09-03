@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Riddle from "../components/Riddle";
 
@@ -6,16 +6,32 @@ export default function GamePage() {
   loadRiddlesToLocalStorage();
   const riddlesString = localStorage.getItem("riddles");
   const riddlesFromStorage = riddlesString ? JSON.parse(riddlesString) : [];
+  const [currentRiddleIdx, setCurrentRiddleIdx] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
+  const riddles = riddlesFromStorage;
+
+  useEffect(() => {
+    if (isSolved && currentRiddleIdx < riddles.length - 1) {
+      const timer = setTimeout(() => {
+        setCurrentRiddleIdx((idx) => idx + 1);
+        setIsSolved(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isSolved, currentRiddleIdx, riddles.length]);
+
   return (
     <div>
       <Header headerText="Game" btnText="Light/Dark mode" />
-      {}
-      <Riddle
-        riddle={riddlesFromStorage[0]}
-        isSolved={isSolved}
-        setIsSolved={setIsSolved}
-      />
+      {currentRiddleIdx < riddles.length ? (
+        <Riddle
+          riddle={riddles[currentRiddleIdx]}
+          isSolved={isSolved}
+          setIsSolved={setIsSolved}
+        />
+      ) : (
+        <div>All riddles solved!</div>
+      )}
     </div>
   );
 }
