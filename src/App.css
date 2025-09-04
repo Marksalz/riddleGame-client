@@ -195,7 +195,7 @@ button:focus-visible {
   width: 20%;
 }
 
-.riddle_List{
+.riddle_List {
   display: flex;
   flex-direction: column;
 }
@@ -207,7 +207,7 @@ button:focus-visible {
   align-items: flex-start;
 }
 
-.riddle-list-btns button{
+.riddle-list-btns button {
   width: 10rem;
   margin: 1rem;
 }
@@ -230,7 +230,8 @@ button:focus-visible {
 
 .riddle-list-item-desc,
 .riddle-list-item-difficulty,
-.riddle-list-item-timelimit {
+.riddle-list-item-timelimit,
+.riddle-list-item-correctAnswer {
   margin: 0 0 8px 0;
 }
 
@@ -258,10 +259,10 @@ button:focus-visible {
   color: #483d8b;
 }
 
-.delete_btn{
+.delete_btn {
   background-color: red;
 }
 
-.delete_btn:hover{
+.delete_btn:hover {
   background-color: darkred;
 }

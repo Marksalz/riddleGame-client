@@ -1,4 +1,7 @@
-export default function Header(props: { headerText: string | undefined; btnText: string }) {
+export default function Header(props: {
+  headerText: string | undefined;
+  btnText: string;
+}) {
   return (
     <header className="header">
       <p>{props.headerText}</p>

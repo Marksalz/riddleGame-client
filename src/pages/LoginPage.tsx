@@ -12,7 +12,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const currentPlayerContext = useCurrentPlayer();
   const url = BASE_URL;
-  mockUsers();
   return (
     <div>
       <Header headerText="Login/Register" btnText="Light/Dark mode" />
@@ -116,23 +115,4 @@ export default function LoginPage() {
       </section>
     </div>
   );
-}
-
-function mockUsers() {
-  // Array of user objects
-  const users = [
-    { username: "alice", password: "alice123" },
-    { username: "bob", password: "bob456" },
-    { username: "charlie", password: "charlie789" },
-    { username: "david", password: "david321" },
-    { username: "emma", password: "emma654" },
-  ];
-
-  // Save to localStorage
-  localStorage.setItem("users", JSON.stringify(users));
-
-  //   // Retrieve later
-  //   const usersString = localStorage.getItem("users");
-  //   const storedUsers = usersString ? JSON.parse(usersString) : [];
-  //   console.log(storedUsers);
 }
