@@ -26,7 +26,7 @@ export default function Form(props: {
             name={field.name}
             type={field.type || "text"}
             placeholder={field.placeholder || ""}
-            value={formData[field.name]}
+            value={formData[field.name] ?? ""}
             onChange={handleChange}
           />
         ))}

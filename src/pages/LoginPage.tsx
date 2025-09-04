@@ -5,12 +5,13 @@ import Form from "../components/Form";
 import { useNavigate } from "react-router";
 import { useCurrentPlayer } from "../contexts/CurrentPlayerContext";
 import type { Player } from "../contexts/CurrentPlayerContext";
+import { BASE_URL } from "../utils/URL";
 
 export default function LoginPage() {
   const [showLoginForm, setShowLoginForm] = useState(true);
   const navigate = useNavigate();
   const currentPlayerContext = useCurrentPlayer();
-  mockUsers();
+  //const localUrl = "http://localhost:3000";
   return (
     <div>
       <Header headerText="Login/Register" btnText="Light/Dark mode" />
@@ -42,19 +43,18 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(
-                `http://localhost:3000/api/players/login`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include",
-                  body: JSON.stringify(formData),
-                }
-              );
+              const res = await fetch(`${BASE_URL}/api/players/login`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+              });
               const data = await res.json();
               if (res.ok) {
+                console.log(res.headers);
+
                 alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
                 currentPlayerContext.setCurrentPlayer(data.user);
                 navigate("/menu");
@@ -87,17 +87,14 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(
-                `http://localhost:3000/api/players/signup`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include",
-                  body: JSON.stringify(formData),
-                }
-              );
+              const res = await fetch(`${BASE_URL}/api/players/signup`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+              });
               const data = await res.json();
               if (res.ok) {
                 alert("Registration successful!");
@@ -120,23 +117,4 @@ export default function LoginPage() {
       </section>
     </div>
   );
-}
-
-function mockUsers() {
-  // Array of user objects
-  const users = [
-    { username: "alice", password: "alice123" },
-    { username: "bob", password: "bob456" },
-    { username: "charlie", password: "charlie789" },
-    { username: "david", password: "david321" },
-    { username: "emma", password: "emma654" },
-  ];
-
-  // Save to localStorage
-  localStorage.setItem("users", JSON.stringify(users));
-
-  //   // Retrieve later
-  //   const usersString = localStorage.getItem("users");
-  //   const storedUsers = usersString ? JSON.parse(usersString) : [];
-  //   console.log(storedUsers);
 }

@@ -194,3 +194,93 @@ button:focus-visible {
 .menu_container button {
   width: 20%;
 }
+
+.riddle_List {
+  display: flex;
+  flex-direction: column;
+}
+
+.riddle-list-item,
+.riddle-list-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.riddle-list-btns button {
+  width: 10rem;
+  margin: 1rem;
+}
+
+.riddle-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fffbe7;
+  color: #483d8b;
+}
+
+.riddle-list-item-title {
+  margin: 0 0 8px 0;
+}
+
+.riddle-list-item-desc,
+.riddle-list-item-difficulty,
+.riddle-list-item-timelimit,
+.riddle-list-item-correctAnswer {
+  margin: 0 0 8px 0;
+}
+
+.riddle-list-item-hint {
+  margin: 0;
+}
+
+.riddle-list-item-choices {
+  margin-top: 8px;
+  display: flex;
+}
+
+.riddle-list-item-choices-list {
+  margin: 8px 0 0 0;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: decimal;
+}
+
+.riddle-list-item-choices-list li {
+  margin-bottom: 6px;
+  padding-left: 4px;
+  font-size: 1em;
+  color: #483d8b;
+}
+
+.delete_btn {
+  background-color: red;
+}
+
+.delete_btn:hover {
+  background-color: darkred;
+}
+
+.riddle-update-btns {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.riddle-list-item label{
+  font-weight: bolder;
+}
+
+.riddle-list-item input{
+  min-width: 300px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #ccc;
+}
