@@ -269,7 +269,18 @@ button:focus-visible {
 
 .riddle-update-btns {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   gap: 0.5rem;
   margin-top: 1rem;
+}
+
+.riddle-list-item label{
+  font-weight: bolder;
+}
+
+.riddle-list-item input{
+  min-width: 300px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #ccc;
 }
