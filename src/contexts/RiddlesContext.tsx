@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { IRiddle } from "../interfaces/IRiddle";
-import { BASE_URL } from "../utils/URL";
+import { fetchRiddles } from "../services/riddleService";
 
 interface RiddleContextType {
   riddles: IRiddle[] | null;
@@ -12,27 +12,6 @@ const RiddlesContext = createContext<RiddleContextType | undefined>({
   riddles: null,
   setRiddles: () => {},
 });
-
-const fetchRiddles = async () => {
-  try {
-    const res = await fetch(`${BASE_URL}/api/riddles/read_all_riddles`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-    if (!res.ok) {
-      console.error("Failed to fetch riddles:", res.status, res.statusText);
-      return;
-    }
-    const riddles = await res.json();
-    localStorage.setItem("riddles", JSON.stringify(riddles));
-    return riddles;
-  } catch (error) {
-    console.error("Error fetching riddles:", error);
-  }
-};
 
 export const RiddlesProvider = ({ children }: { children: ReactNode }) => {
   const [riddles, setRiddles] = useState<IRiddle[] | null>(null);

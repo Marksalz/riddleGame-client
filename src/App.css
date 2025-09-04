@@ -266,3 +266,10 @@ button:focus-visible {
 .delete_btn:hover {
   background-color: darkred;
 }
+
+.riddle-update-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

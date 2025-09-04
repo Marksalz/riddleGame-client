@@ -3,6 +3,8 @@ import type { IRiddle } from "../interfaces/IRiddle";
 import React from "react";
 import { useState } from "react";
 import { BASE_URL } from "../utils/URL";
+import { useRiddles } from "../contexts/RiddlesContext";
+import { deleteRiddle, fetchRiddles } from "../services/riddleService";
 
 export default function RiddleListItem({
   _id,
@@ -15,6 +17,7 @@ export default function RiddleListItem({
   choices,
 }: IRiddle) {
   const currentPlayerContext = useCurrentPlayer();
+  const RiddlesContext = useRiddles();
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,6 +33,17 @@ export default function RiddleListItem({
   const handleEditClick = () => setIsEditing(true);
   const handleCancelClick = () => setIsEditing(false);
 
+  const handleDeleteClick = async () => {
+    try {
+      await deleteRiddle(_id);
+      const updatedRiddles = await fetchRiddles();
+      RiddlesContext.setRiddles(updatedRiddles);
+      alert("Riddle deleted successfully!");
+    } catch (err: any) {
+      alert("Error deleting riddle: " + err.message);
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -38,29 +52,26 @@ export default function RiddleListItem({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const updateRiddle = async () => {
-      try {
-        const res = await fetch(
-          `${BASE_URL}/api/riddles/update_riddle/${_id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
-        if (!res.ok) throw new Error("Failed to update riddle");
-        await res.json();
-        setIsEditing(false);
-      } catch (err: any) {
-        alert("Error updating riddle: " + err.message);
-      }
-    };
-    updateRiddle();
+    try {
+      const res = await fetch(`${BASE_URL}/api/riddles/update_riddle/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error("Failed to update riddle");
+      await res.json();
+      setIsEditing(false);
+      // Fetch updated riddles and update context
+      const updatedRiddles = await fetchRiddles();
+      RiddlesContext.setRiddles(updatedRiddles);
+      alert("Riddle updated successfully!");
+    } catch (err: any) {
+      alert("Error updating riddle: " + err.message);
+    }
   };
 
   return (
@@ -101,80 +112,82 @@ export default function RiddleListItem({
             onSubmit={handleSubmit}
             style={{ marginTop: "1rem" }}
           >
-            <label htmlFor="name">Riddle Name:</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Riddle Name"
-              required
-            />
-            <label htmlFor="taskDescription">Task Description:</label>
-            <input
-              id="taskDescription"
-              type="text"
-              name="taskDescription"
-              value={formData.taskDescription}
-              onChange={handleChange}
-              placeholder="Task Description"
-              required
-            />
-            <label htmlFor="difficulty">Difficulty:</label>
-            <input
-              id="difficulty"
-              type="text"
-              name="difficulty"
-              value={formData.difficulty}
-              onChange={handleChange}
-              placeholder="Difficulty"
-              required
-            />
-            <label htmlFor="timeLimit">Time Limit (seconds):</label>
-            <input
-              id="timeLimit"
-              type="number"
-              name="timeLimit"
-              value={formData.timeLimit}
-              onChange={handleChange}
-              placeholder="Time Limit (seconds)"
-              required
-            />
-            <label htmlFor="hint">Hint:</label>
-            <input
-              id="hint"
-              type="text"
-              name="hint"
-              value={formData.hint}
-              onChange={handleChange}
-              placeholder="Hint"
-            />
-            <label htmlFor="correctAnswer">Correct Answer:</label>
-            <input
-              id="correctAnswer"
-              type="text"
-              name="correctAnswer"
-              value={formData.correctAnswer}
-              onChange={handleChange}
-              placeholder="Correct Answer"
-              required
-            />
-            <button type="submit">Update Riddle</button>
-            <button
-              type="button"
-              onClick={handleCancelClick}
-              style={{ marginLeft: "0.5rem" }}
-            >
-              Cancel
-            </button>
+            <div className="riddle-list-item">
+              <label htmlFor="name">Riddle Name:</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Riddle Name"
+                required
+              />
+              <label htmlFor="taskDescription">Task Description:</label>
+              <input
+                id="taskDescription"
+                type="text"
+                name="taskDescription"
+                value={formData.taskDescription}
+                onChange={handleChange}
+                placeholder="Task Description"
+                required
+              />
+              <label htmlFor="difficulty">Difficulty:</label>
+              <input
+                id="difficulty"
+                type="text"
+                name="difficulty"
+                value={formData.difficulty}
+                onChange={handleChange}
+                placeholder="Difficulty"
+                required
+              />
+              <label htmlFor="timeLimit">Time Limit (seconds):</label>
+              <input
+                id="timeLimit"
+                type="number"
+                name="timeLimit"
+                value={formData.timeLimit}
+                onChange={handleChange}
+                placeholder="Time Limit (seconds)"
+                required
+              />
+              <label htmlFor="hint">Hint:</label>
+              <input
+                id="hint"
+                type="text"
+                name="hint"
+                value={formData.hint}
+                onChange={handleChange}
+                placeholder="Hint"
+              />
+              <label htmlFor="correctAnswer">Correct Answer:</label>
+              <input
+                id="correctAnswer"
+                type="text"
+                name="correctAnswer"
+                value={formData.correctAnswer}
+                onChange={handleChange}
+                placeholder="Correct Answer"
+                required
+              />
+            </div>
+            <div className="riddle-update-btns">
+              <button type="submit">Update Riddle</button>
+              <button type="button" onClick={handleCancelClick}>
+                Cancel
+              </button>
+            </div>
           </form>
         )}
       </div>
       {currentPlayerContext.currentPlayer?.role === "admin" && !isEditing && (
         <aside className="riddle-list-btns">
           <button onClick={handleEditClick}>Edit riddle</button>
-          <button className="delete_btn">Delete riddle</button>
+          <button onClick={handleDeleteClick} className="delete_btn">
+            Delete riddle
+          </button>
         </aside>
       )}
     </div>
