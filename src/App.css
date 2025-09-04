@@ -195,11 +195,22 @@ button:focus-visible {
   width: 20%;
 }
 
-.riddle-list-item {
+.riddle-list-item,
+.riddle-list-btns {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
+}
+
+.riddle-list-btns button{
+  width: 10rem;
+  margin: 1rem;
+}
+
+.riddle-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;

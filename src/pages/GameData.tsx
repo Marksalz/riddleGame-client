@@ -30,7 +30,7 @@ function GameData() {
   return (
     <div>
       <Header
-        headerText={currentPlayerContext.currentPlayer?.role ?? "Game data"}
+        headerText={currentPlayerContext.currentPlayer?.role.toUpperCase() ?? "Game data"}
         btnText="Light/Dark mode"
       />
       <div className="riddle_List">
