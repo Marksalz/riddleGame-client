@@ -5,11 +5,13 @@ import Form from "../components/Form";
 import { useNavigate } from "react-router";
 import { useCurrentPlayer } from "../contexts/CurrentPlayerContext";
 import type { Player } from "../contexts/CurrentPlayerContext";
+import { BASE_URL } from "../utils/URL";
 
 export default function LoginPage() {
   const [showLoginForm, setShowLoginForm] = useState(true);
   const navigate = useNavigate();
   const currentPlayerContext = useCurrentPlayer();
+  const url = BASE_URL;
   mockUsers();
   return (
     <div>
@@ -42,17 +44,14 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(
-                `http://localhost:3000/api/players/login`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include",
-                  body: JSON.stringify(formData),
-                }
-              );
+              const res = await fetch(`${url}/api/players/login`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+              });
               const data = await res.json();
               if (res.ok) {
                 alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
@@ -87,17 +86,14 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(
-                `http://localhost:3000/api/players/signup`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include",
-                  body: JSON.stringify(formData),
-                }
-              );
+              const res = await fetch(`${url}/api/players/signup`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+              });
               const data = await res.json();
               if (res.ok) {
                 alert("Registration successful!");

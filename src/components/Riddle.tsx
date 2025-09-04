@@ -11,8 +11,6 @@ type RiddleProps = {
   };
   isSolved: boolean;
   setIsSolved: React.Dispatch<React.SetStateAction<boolean>>;
-  //timeLeft: number;
-  //setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function Riddle(props: RiddleProps) {

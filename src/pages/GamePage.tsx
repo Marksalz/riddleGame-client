@@ -28,8 +28,6 @@ export default function GamePage() {
           riddle={riddles[currentRiddleIdx]}
           isSolved={isSolved}
           setIsSolved={setIsSolved}
-          //timeLeft={timeLeft}
-          
         />
       ) : (
         <div>All riddles solved!</div>
