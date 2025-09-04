@@ -13,17 +13,26 @@ import { BASE_URL } from "../utils/URL";
 //   choices: string[];
 // }
 
-export default function RiddleListItem(riddle: IRiddle) {
+export default function RiddleListItem({
+  id,
+  name,
+  taskDescription,
+  correctAnswer,
+  difficulty,
+  timeLimit,
+  hint,
+  choices,
+}: IRiddle) {
   const currentPlayerContext = useCurrentPlayer();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    id: riddle.id,
-    name: riddle.name,
-    taskDescription: riddle.taskDescription,
-    difficulty: riddle.difficulty,
-    timeLimit: riddle.timeLimit,
-    hint: riddle.hint,
-    correctAnswer: riddle.correctAnswer,
+    id,
+    name,
+    taskDescription,
+    difficulty,
+    timeLimit,
+    hint,
+    correctAnswer,
   });
 
   const handleEditClick = () => setIsEditing(true);
@@ -41,16 +50,13 @@ export default function RiddleListItem(riddle: IRiddle) {
     e.preventDefault();
     const updateRiddle = async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/api/riddles/update_riddle/${riddle.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
+        const res = await fetch(`${BASE_URL}/api/riddles/update_riddle/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
         if (!res.ok) throw new Error("Failed to update riddle");
         await res.json();
         setIsEditing(false);
@@ -66,27 +72,27 @@ export default function RiddleListItem(riddle: IRiddle) {
       <div className="riddle-list-item">
         {!isEditing ? (
           <>
-            <h3 className="riddle-list-item-title">{riddle.name}</h3>
+            <h3 className="riddle-list-item-title">{name}</h3>
             <p className="riddle-list-item-desc">
-              <strong>Riddle:</strong> {riddle.taskDescription}
+              <strong>Riddle:</strong> {taskDescription}
             </p>
             <p className="riddle-list-item-difficulty">
-              <strong>Difficulty:</strong> {riddle.difficulty}
+              <strong>Difficulty:</strong> {difficulty}
             </p>
             <p className="riddle-list-item-timelimit">
-              <strong>Time Limit:</strong> {riddle.timeLimit} seconds
+              <strong>Time Limit:</strong> {timeLimit} seconds
             </p>
             <p className="riddle-list-item-correctAnswer">
-              <strong>Correct Answer:</strong> {riddle.correctAnswer}
+              <strong>Correct Answer:</strong> {correctAnswer}
             </p>
             <p className="riddle-list-item-hint">
-              <strong>Hint:</strong> {riddle.hint}
+              <strong>Hint:</strong> {hint}
             </p>
-            {riddle.choices && riddle.choices.length > 0 && (
+            {choices && choices.length > 0 && (
               <div className="riddle-list-item-choices">
                 <strong>Choices:</strong>
                 <ul className="riddle-list-item-choices-list">
-                  {riddle.choices.map((choice, idx) => (
+                  {choices.map((choice, idx) => (
                     <li key={idx}>{choice}</li>
                   ))}
                 </ul>
