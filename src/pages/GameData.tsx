@@ -16,7 +16,7 @@ function GameData() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        },
+        }, 
         credentials: "include",
       });
       const data = await res.json();
@@ -37,7 +37,7 @@ function GameData() {
         {riddles.map((riddle: IRiddle, idx: number) => (
           <RiddleListItem
             key={idx}
-            id={riddle.id}
+            _id={riddle._id}
             name={riddle.name}
             taskDescription={riddle.taskDescription}
             correctAnswer={riddle.correctAnswer}

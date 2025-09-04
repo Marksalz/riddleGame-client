@@ -4,17 +4,8 @@ import React from "react";
 import { useState } from "react";
 import { BASE_URL } from "../utils/URL";
 
-// export interface RiddleListItemProps {
-//   name: string;
-//   taskDescription: string;
-//   difficulty: string;
-//   timeLimit: number;
-//   hint: string;
-//   choices: string[];
-// }
-
 export default function RiddleListItem({
-  id,
+  _id,
   name,
   taskDescription,
   correctAnswer,
@@ -24,9 +15,10 @@ export default function RiddleListItem({
   choices,
 }: IRiddle) {
   const currentPlayerContext = useCurrentPlayer();
+
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    id,
+    _id,
     name,
     taskDescription,
     difficulty,
@@ -48,15 +40,19 @@ export default function RiddleListItem({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const updateRiddle = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/riddles/update_riddle/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const res = await fetch(
+          `${BASE_URL}/api/riddles/update_riddle/${_id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         if (!res.ok) throw new Error("Failed to update riddle");
         await res.json();
         setIsEditing(false);

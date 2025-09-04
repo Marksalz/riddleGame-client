@@ -40,6 +40,7 @@ export const RiddlesProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const getRiddles = async () => {
       const fetchedRiddles = await fetchRiddles();
+
       if (fetchedRiddles) {
         setRiddles(fetchedRiddles);
       }
