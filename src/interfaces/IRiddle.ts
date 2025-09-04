@@ -1,4 +1,5 @@
 export interface IRiddle {
+  id: string;
   name: string;
   taskDescription: string;
   correctAnswer: string;

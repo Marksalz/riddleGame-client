@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [showLoginForm, setShowLoginForm] = useState(true);
   const navigate = useNavigate();
   const currentPlayerContext = useCurrentPlayer();
-  const url = BASE_URL;
+  //const localUrl = "http://localhost:3000";
   return (
     <div>
       <Header headerText="Login/Register" btnText="Light/Dark mode" />
@@ -43,7 +43,7 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(`${url}/api/players/login`, {
+              const res = await fetch(`${BASE_URL}/api/players/login`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -53,6 +53,8 @@ export default function LoginPage() {
               });
               const data = await res.json();
               if (res.ok) {
+                console.log(res.headers);
+
                 alert(`Welcome back! User info: ${JSON.stringify(data.user)}`);
                 currentPlayerContext.setCurrentPlayer(data.user);
                 navigate("/menu");
@@ -85,7 +87,7 @@ export default function LoginPage() {
             ]}
             showLogin={showLoginForm}
             onClick={async (formData) => {
-              const res = await fetch(`${url}/api/players/signup`, {
+              const res = await fetch(`${BASE_URL}/api/players/signup`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

@@ -37,6 +37,7 @@ function GameData() {
         {riddles.map((riddle: IRiddle, idx: number) => (
           <RiddleListItem
             key={idx}
+            id={riddle.id}
             name={riddle.name}
             taskDescription={riddle.taskDescription}
             correctAnswer={riddle.correctAnswer}
