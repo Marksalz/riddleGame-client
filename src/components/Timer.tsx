@@ -10,13 +10,16 @@ export default function Timer(props: {
   setIsOvertime: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   useEffect(() => {
-    props.setTimeLeft(props.timeLimit);
+    //props.setTimeLeft(props.timeLimit);
+    let initialTimeLeft = props.isOvertime ? 1 : props.timeLimit;
+    props.setTimeLeft(initialTimeLeft);
+
     const timer = setInterval(() => {
       props.setFinalTime((prevFinalTime) => prevFinalTime + 1);
 
       props.setTimeLeft((t) => {
         if (!props.isOvertime) {
-          if (t > 0) {
+          if (t > 1) {
             return t - 1;
           } else {
             props.setIsOvertime(true);
