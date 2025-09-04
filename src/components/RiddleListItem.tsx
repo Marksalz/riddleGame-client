@@ -1,4 +1,4 @@
-import Button from "./Button";
+import { useCurrentPlayer } from "../contexts/CurrentPlayerContext";
 
 export interface RiddleListItemProps {
   name: string;
@@ -17,6 +17,7 @@ export default function RiddleListItem({
   hint,
   choices,
 }: RiddleListItemProps) {
+  const currentPlayerContext = useCurrentPlayer();
   return (
     <div className="riddle-list-container">
       <div className="riddle-list-item">
@@ -44,10 +45,12 @@ export default function RiddleListItem({
           </div>
         )}
       </div>
-      <aside className="riddle-list-btns">
-        <Button ButtonTxt="Edit riddle" />
-        <Button ButtonTxt="Delete riddle" />
-      </aside>
+      {currentPlayerContext.currentPlayer?.role === "admin" && (
+        <aside className="riddle-list-btns">
+          <button>Edit riddle</button>
+          <button className="delete_btn">Delete riddle</button>
+        </aside>
+      )}
     </div>
   );
 }

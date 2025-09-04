@@ -195,6 +195,11 @@ button:focus-visible {
   width: 20%;
 }
 
+.riddle_List{
+  display: flex;
+  flex-direction: column;
+}
+
 .riddle-list-item,
 .riddle-list-btns {
   display: flex;
@@ -251,4 +256,12 @@ button:focus-visible {
   padding-left: 4px;
   font-size: 1em;
   color: #483d8b;
+}
+
+.delete_btn{
+  background-color: red;
+}
+
+.delete_btn:hover{
+  background-color: darkred;
 }
