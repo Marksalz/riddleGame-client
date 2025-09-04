@@ -194,3 +194,50 @@ button:focus-visible {
 .menu_container button {
   width: 20%;
 }
+
+.riddle-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fffbe7;
+  color: #483d8b;
+}
+
+.riddle-list-item-title {
+  margin: 0 0 8px 0;
+}
+
+.riddle-list-item-desc,
+.riddle-list-item-difficulty,
+.riddle-list-item-timelimit {
+  margin: 0 0 8px 0;
+}
+
+.riddle-list-item-hint {
+  margin: 0;
+}
+
+.riddle-list-item-choices {
+  margin-top: 8px;
+  display: flex;
+}
+
+.riddle-list-item-choices-list {
+  margin: 8px 0 0 0;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: decimal;
+}
+
+.riddle-list-item-choices-list li {
+  margin-bottom: 6px;
+  padding-left: 4px;
+  font-size: 1em;
+  color: #483d8b;
+}

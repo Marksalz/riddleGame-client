@@ -5,11 +5,12 @@ import RiddleListItem, {
 import { useCurrentPlayer } from "../contexts/CurrentPlayerContext";
 import { useEffect } from "react";
 import { BASE_URL } from "../utils/URL";
+import { useState } from "react";
 
 function GameData() {
   const currentPlayerContext = useCurrentPlayer();
   const url = BASE_URL;
-  let riddles: any = [];
+  const [riddles, setRiddles] = useState<RiddleListItemProps[]>([]);
 
   useEffect(() => {
     const fetchRiddles = async () => {
@@ -20,7 +21,8 @@ function GameData() {
         },
         credentials: "include",
       });
-      riddles = await res.json();
+      const data = await res.json();
+      setRiddles(data);
     };
     fetchRiddles();
   }, []);

@@ -16,32 +16,24 @@ export default function RiddleListItem({
   choices,
 }: RiddleListItemProps) {
   return (
-    <div
-      className="riddle-list-item"
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 12,
-      }}
-    >
-      <h3 style={{ margin: "0 0 8px 0" }}>{name}</h3>
-      <p style={{ margin: "0 0 8px 0" }}>
+    <div className="riddle-list-item">
+      <h3 className="riddle-list-item-title">{name}</h3>
+      <p className="riddle-list-item-desc">
         <strong>Riddle:</strong> {taskDescription}
       </p>
-      <p style={{ margin: "0 0 8px 0" }}>
+      <p className="riddle-list-item-difficulty">
         <strong>Difficulty:</strong> {difficulty}
       </p>
-      <p style={{ margin: "0 0 8px 0" }}>
+      <p className="riddle-list-item-timelimit">
         <strong>Time Limit:</strong> {timeLimit} seconds
       </p>
-      <p style={{ margin: "0" }}>
+      <p className="riddle-list-item-hint">
         <strong>Hint:</strong> {hint}
       </p>
       {choices && choices.length > 0 && (
-        <div style={{ marginTop: 8 }}>
+        <div className="riddle-list-item-choices">
           <strong>Choices:</strong>
-          <ul style={{ margin: "4px 0 0 16px" }}>
+          <ul className="riddle-list-item-choices-list">
             {choices.map((choice, idx) => (
               <li key={idx}>{choice}</li>
             ))}
